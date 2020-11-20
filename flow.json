@@ -1,1 +1,428 @@
-[]
+[
+    {
+        "id": "b406376e.ea23e8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "878b44bc.7f13e8",
+        "type": "ui_group",
+        "name": "Vehicle Monitoring Application",
+        "tab": "23d0c58f.64798a",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "23d0c58f.64798a",
+        "type": "ui_tab",
+        "name": "Cloud",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "95a994fe.63a2c8",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "1d4d00e4.773b3f",
+        "type": "inject",
+        "z": "b406376e.ea23e8",
+        "name": "time",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 290,
+        "y": 240,
+        "wires": [
+            [
+                "3356fd70.e98c32"
+            ]
+        ]
+    },
+    {
+        "id": "3356fd70.e98c32",
+        "type": "function",
+        "z": "b406376e.ea23e8",
+        "name": "Device payload",
+        "func": "var petrolOil = [65, 64, 63, 62, 61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];\nvar engineTemp = [40,60,80,90,100,120,130,110,90,80];\nvar batteryLevel = [20000,15000,20000,25000,30000,35000,30000,35000,40000,50000,55000,60000,65000,60000,65000];\nvar coolantLevel = [5,4.8,4.6,4.2,3.8,3.6,3.3,2.9,2.5,2.2,2.0,1.8,1.6,1.3,1.0,0.9,0.7,0.5,0.3,0.1];\nvar airCondtemp = [35,33,28,30,27,25,23,21,24,26];\n\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 9) counter1 = 0;\ncontext.set('counter1',counter1);\n\n//counter for petrol level\nvar counter2 = context.get('counter2')||0;\ncounter2 = counter2+1;\nif(counter2 > 64) counter2 = 0;\ncontext.set('counter2',counter2);\n\n//counter for battery level\nvar counter3 = context.get('counter3')||0;\ncounter3 = counter3+1;\nif(counter3 > 14) counter3 = 0;\ncontext.set('counter3',counter3);\n\n//counter level for coolant\nvar counter4 = context.get('counter4')||0;\ncounter4 = counter4+1;\nif(counter4 > 19) counter4 = 0;\ncontext.set('counter4',counter4);\n\nmsg = {\n  payload: JSON.stringify(\n    {\n      d:{\n\n        \"petrol\" : petrolOil[counter2],\n        \"engine\" : engineTemp[counter1],\n        \"battery\" : batteryLevel[counter3],\n        \"coolant\" : coolantLevel[counter4],\n        \"aircond\" : airCondtemp[counter1],\n\n      }\n    }\n  )\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 500,
+        "y": 200,
+        "wires": [
+            [
+                "3975e42f.a2a78c"
+            ]
+        ]
+    },
+    {
+        "id": "3975e42f.a2a78c",
+        "type": "json",
+        "z": "b406376e.ea23e8",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 700,
+        "y": 180,
+        "wires": [
+            [
+                "da3a0fa0.57edb",
+                "4562b605.49f948",
+                "4d86015e.45b08",
+                "57dac181.752ea",
+                "d1f07397.878c7",
+                "96d54822.689cd8"
+            ]
+        ]
+    },
+    {
+        "id": "da3a0fa0.57edb",
+        "type": "debug",
+        "z": "b406376e.ea23e8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4d86015e.45b08",
+        "type": "function",
+        "z": "b406376e.ea23e8",
+        "name": "return engineTemp",
+        "func": "return {payload:msg.payload.d.engine};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 760,
+        "y": 400,
+        "wires": [
+            [
+                "2538f4a2.e671ec"
+            ]
+        ]
+    },
+    {
+        "id": "57dac181.752ea",
+        "type": "function",
+        "z": "b406376e.ea23e8",
+        "name": "return batteryLevel",
+        "func": "return {payload:msg.payload.d.battery};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 780,
+        "y": 480,
+        "wires": [
+            [
+                "fa8035dd.d44cc8"
+            ]
+        ]
+    },
+    {
+        "id": "d1f07397.878c7",
+        "type": "function",
+        "z": "b406376e.ea23e8",
+        "name": "return coolantLevel",
+        "func": "return {payload:msg.payload.d.coolant};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 800,
+        "y": 560,
+        "wires": [
+            [
+                "92097c9b.d19a8"
+            ]
+        ]
+    },
+    {
+        "id": "96d54822.689cd8",
+        "type": "function",
+        "z": "b406376e.ea23e8",
+        "name": "return aircondTemp",
+        "func": "return {payload:msg.payload.d.aircond};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 810,
+        "y": 640,
+        "wires": [
+            [
+                "a312af97.9492b"
+            ]
+        ]
+    },
+    {
+        "id": "4562b605.49f948",
+        "type": "function",
+        "z": "b406376e.ea23e8",
+        "name": "return petrol",
+        "func": "return {payload:msg.payload.d.petrol};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 740,
+        "y": 340,
+        "wires": [
+            [
+                "315fadc6.9f14a2"
+            ]
+        ]
+    },
+    {
+        "id": "315fadc6.9f14a2",
+        "type": "ui_gauge",
+        "z": "b406376e.ea23e8",
+        "name": "",
+        "group": "878b44bc.7f13e8",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Petrol",
+        "label": "Litres",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "65",
+        "colors": [
+            "#b30000",
+            "#e6e600",
+            "#53d317"
+        ],
+        "seg1": "10",
+        "seg2": "20",
+        "x": 1020,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "2538f4a2.e671ec",
+        "type": "ui_gauge",
+        "z": "b406376e.ea23e8",
+        "name": "",
+        "group": "878b44bc.7f13e8",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Engine Temperature",
+        "label": "Celsius",
+        "format": "{{value}}",
+        "min": "25",
+        "max": "150",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "80",
+        "seg2": "90",
+        "x": 1070,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "fa8035dd.d44cc8",
+        "type": "ui_gauge",
+        "z": "b406376e.ea23e8",
+        "name": "",
+        "group": "878b44bc.7f13e8",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Battery Level",
+        "label": "mAh",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "70000",
+        "colors": [
+            "#b30000",
+            "#e6e600",
+            "#3acb43"
+        ],
+        "seg1": "5000",
+        "seg2": "10000",
+        "x": 1050,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "92097c9b.d19a8",
+        "type": "ui_gauge",
+        "z": "b406376e.ea23e8",
+        "name": "",
+        "group": "878b44bc.7f13e8",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Coolant Level",
+        "label": "Litres",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "5",
+        "colors": [
+            "#b30000",
+            "#e6e600",
+            "#52cb3a"
+        ],
+        "seg1": "1",
+        "seg2": "2",
+        "x": 1080,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "a312af97.9492b",
+        "type": "ui_gauge",
+        "z": "b406376e.ea23e8",
+        "name": "",
+        "group": "878b44bc.7f13e8",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Aircond Temperature",
+        "label": "Celsius",
+        "format": "{{value}}",
+        "min": "18",
+        "max": "40",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "32",
+        "x": 1100,
+        "y": 620,
+        "wires": []
+    }
+]
